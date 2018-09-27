@@ -1,0 +1,5 @@
+package com.taotao.manage.interceptor;
+
+public class LoginInterceptor {
+
+}

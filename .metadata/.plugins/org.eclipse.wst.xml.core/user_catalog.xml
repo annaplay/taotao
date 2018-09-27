@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <system systemId="http://www.springframework.org/schema/tx/spring-tx-4.0.xsd" uri="file:///F:/淘淘商城/课前资料/day01（RESTful%20Web%20Service、SVN）/课程资料/开发资料/xml约束/xsd/spring-tx-4.0.xsd"/>
+</catalog>

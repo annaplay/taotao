@@ -1,0 +1,22 @@
+package com.taotao.manage.controller.api;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.taotao.bean.ItemCatResult;
+import com.taotao.manage.service.ItemCatService;
+
+@Controller
+@RequestMapping("api/item/cat")
+public class ApiItemCatController {
+    @Autowired
+    private ItemCatService itemCatService;
+    
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<ItemCatResult> queryItemCatList(){
+        this.itemCatService.queryAllToTree();
+    }
+}

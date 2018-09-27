@@ -1,0 +1,80 @@
+package com.taotao.manage.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.github.pagehelper.PageInfo;
+import com.taotao.bean.QueryResult;
+import com.taotao.manage.pojo.ItemParam;
+import com.taotao.manage.service.ItemParamService;
+
+@Controller
+@RequestMapping("item/param")
+public class ItemParamController {
+    @Autowired
+    private ItemParamService itemParamService;
+    
+    /**
+     * 通过商品类目id查找是否存在该商品类目规格模板
+     * @param itemCatId
+     * @return
+     */
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public ResponseEntity<ItemParam> queryByItemCatId(@PathVariable(value = "id") Long itemCatId) {
+        try {
+            ItemParam record = new ItemParam();
+            record.setItemCatId(itemCatId);
+            ItemParam itemParam = this.itemParamService.queryOne(record);
+            if (null == itemParam) {
+                // 404
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            // 200
+            return ResponseEntity.ok(itemParam);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //500
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+    
+    /**
+     * 新增商品规格模板
+     * @param itemCatId
+     * @param paramData
+     * @return
+     */
+    @RequestMapping(value = "{itemCatId}", method = RequestMethod.POST)
+    public ResponseEntity<Void> saveItemParam(@PathVariable(value = "itemCatId") Long itemCatId, 
+                                              @RequestParam(value = "paramData") String paramData){
+        try {
+            ItemParam record = new ItemParam();
+            record.setId(null);
+            record.setItemCatId(itemCatId);
+            record.setParamData(paramData);
+            Integer count = this.itemParamService.save(record);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+    @RequestMapping(value = "list",method = RequestMethod.GET)
+    public ResponseEntity<QueryResult> queryItemParamList(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                          @RequestParam(value = "rows", defaultValue = "30") Integer rows){
+        
+        try {
+            PageInfo<ItemParam> pageInfo = this.itemParamService.queryPageListByWhere(null, page, rows);
+            return ResponseEntity.ok(new QueryResult(pageInfo.getTotal(),pageInfo.getList()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+}

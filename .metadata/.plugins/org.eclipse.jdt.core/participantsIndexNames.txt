@@ -1,0 +1,17 @@
+INDEX VERSION 1.127
+A:\0910\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\625404855.index
+\fsbx-usermanager\src\main\java
+A:\0910\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2549045772.index
+\taotao-manage-web\src\main\java
+A:\0910\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3676288254.index
+\taotao-web\src\main\java
+A:\0910\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\302541286.index
+\taotao-web\src\main\java
+A:\0910\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1665650392.index
+\taotao-manage-web\src\main\java
+A:\0910\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2416787184.index
+\taotao-manage-web\src\main\java
+A:\0910\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\581120420.index
+\taotao-manage-web\src\main\java
+A:\0910\workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3436176051.index
+\taotao-web\src\main\java

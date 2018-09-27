@@ -1,0 +1,8 @@
+package ItemParamItemMapper;
+
+import com.taotao.manage.pojo.BasePojo;
+import com.taotao.manage.service.BaseService;
+
+public class ItemParamItemService extends BaseService<BasePojo>{
+
+}

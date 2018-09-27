@@ -1,0 +1,158 @@
+package com.taotao.manage.service;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.abel533.entity.Example;
+import com.github.abel533.mapper.Mapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.taotao.manage.pojo.BasePojo;
+
+public abstract class BaseService<T extends BasePojo> {
+    @Autowired
+    private Mapper<T> mapper;
+
+    /**
+     * 让子类来指定mapper
+     * 
+     * @return
+     */
+    // public abstract Mapper<T> getMapper();
+    /**
+     * 通过主键Id查询信息
+     * 
+     * @param id
+     * @return
+     */
+    public T queryById(Long id) {
+        return this.mapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 查询所有信息
+     * 
+     * @return
+     */
+    public List<T> queryAll() {
+        return this.mapper.select(null);
+    }
+
+    /**
+     * 查询一条数据,如果查出多条会抛出异常。
+     * 
+     * @param record
+     * @return
+     */
+    public T queryOne(T record) {
+        return this.mapper.selectOne(record);
+    }
+
+    /**
+     * 根据条件查询
+     * 
+     * @param record
+     * @return
+     */
+    public List<T> queryListByWhere(T record) {
+        return this.mapper.select(record);
+    }
+
+    /**
+     * 根据条件查询并分页
+     * 
+     * @param record 查询条件
+     * @param page 当前页码
+     * @param rows 每页条数
+     * @return
+     */
+    public PageInfo<T> queryPageListByWher(T record, Integer page, Integer rows) {
+        // 设置分页信息
+        PageHelper.startPage(page, rows);
+        List<T> list = this.mapper.select(record);
+        return new PageInfo<T>(list);
+    }
+
+    /**
+     * 保存信息 不排空插入
+     * 
+     * @param record 信息对象
+     * @return
+     */
+    public Integer save(T record) {
+        record.setCreated(new Date());
+        record.setUpdated(record.getCreated());
+        return this.mapper.insert(record);
+    }
+
+    /**
+     * 排空插入
+     * 
+     * @param record
+     * @return
+     */
+    public Integer saveSelective(T record) {
+        record.setCreated(new Date());
+        record.setUpdated(record.getCreated());
+        return this.mapper.insertSelective(record);
+    }
+
+    /**
+     * 通过主键排空更新
+     * 
+     * @param record
+     * @return
+     */
+    public Integer updateSelective(T record) {
+        record.setUpdated(new Date());
+        record.setCreated(null);
+        return this.mapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+     * 通过主键 不排空更新
+     * 
+     * @param record
+     * @return
+     */
+    public Integer update(T record) {
+        record.setUpdated(new Date());
+        return this.mapper.updateByPrimaryKey(record);
+    }
+
+    /**
+     * 通过id删除
+     * 
+     * @param id
+     * @return
+     */
+    public Integer deleteById(Long id) {
+        return this.mapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 通过主键id 批量删除
+     * 
+     * @param ids
+     * @param clazz
+     * @param property 删除条件
+     * @return
+     */
+    public Integer deleteByIds(List<Object> ids, Class<T> clazz, String property) {
+        Example example = new Example(clazz);
+        example.createCriteria().andIn(property, ids);// in 操作 where property in (ids1,ids2...)
+        return this.mapper.deleteByExample(example);
+    }
+
+    /**
+     * 根据条件来删除数据
+     * 
+     * @param record
+     * @return
+     */
+    public Integer deleteByWhere(T record) {
+        return this.mapper.delete(record);
+    }
+}

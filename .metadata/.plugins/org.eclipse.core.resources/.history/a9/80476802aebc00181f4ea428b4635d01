@@ -1,0 +1,5 @@
+package com.taotao.bean;
+
+public class PropertiesService {
+
+}
